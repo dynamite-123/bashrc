@@ -93,6 +93,40 @@ unset __conda_setup
 alias anime='cd "/mnt/d/Videos/Anime"'
 alias coding='cd "/mnt/d/programming"'
 
+# Contest setup function
+contest() {
+    if [ -z "$1" ]; then
+        echo "Usage: contest \"name\""
+        echo "Creates a directory with the given name and an input.txt file inside it."
+        return 1
+    fi
+    
+    local contest_name="$1"
+    local cp_dir="/mnt/d/programming/cp"
+    
+    # Navigate to the cp directory first
+    if [ ! -d "$cp_dir" ]; then
+        echo "CP directory '$cp_dir' does not exist!"
+        return 1
+    fi
+    
+    cd "$cp_dir"
+    
+    if [ -d "$contest_name" ]; then
+        echo "Directory '$contest_name' already exists in $cp_dir!"
+        return 1
+    fi
+    
+    mkdir "$contest_name" && cd "$contest_name" && touch input.txt
+    if [ $? -eq 0 ]; then
+        echo "Contest directory '$contest_name' created successfully in $cp_dir with input.txt"
+        echo "Currently in: $(pwd)"
+    else
+        echo "Failed to create contest directory"
+        return 1
+    fi
+}
+
 # --- WINDOWS MPV SETUP ---
 export PATH=$HOME/bin:$PATH
 
